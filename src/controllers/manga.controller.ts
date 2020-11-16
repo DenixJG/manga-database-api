@@ -18,7 +18,7 @@ export async function getManga(req: Request, res: Response): Promise<Response> {
 
 export async function deleteManga(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const manga = await Manga.findByIdAndRemove(id);
+    const manga = await Manga.findOneAndRemove({_id: id})
     if (manga) {
         await fs.unlink(path.resolve(manga.mangaImagePath))
     }
