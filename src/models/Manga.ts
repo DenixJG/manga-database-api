@@ -28,7 +28,7 @@ const schema = new Schema({
     ]
 });
 
-interface IManga extends Document {
+export interface IManga extends Document {
     title: string,
     author: string,
     artist: string,
