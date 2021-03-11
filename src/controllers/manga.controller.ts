@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import path from "path";
 import fs from "fs-extra";
 
+// Conf
+import { defaults } from "../conf/manga-config.json";
+
 // Modelos
 import Manga, { IManga } from "../models/Manga";
 
@@ -22,9 +25,11 @@ export async function getManga(req: Request, res: Response): Promise<Response> {
 export async function deleteManga(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const manga = await Manga.findOneAndRemove({ _id: id }) as IManga;
-    // TODO: Error al borrar un arhivo que no existe
+    // FIXME: Error al borrar un arhivo que no existe
     if (manga) {
-        await fs.unlink(path.resolve(manga.mangaImagePath));
+        if (manga.mangaImagePath != defaults.mangaImage) {
+            await fs.unlink(path.resolve(manga.mangaImagePath));
+        }
     }
     return res.json({
         message: "Manga eliminado"
@@ -34,16 +39,14 @@ export async function deleteManga(req: Request, res: Response): Promise<Response
 // Actualiza el manga de la base de datos
 export async function updateManga(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { title, author, artist, description, gender, mangaInfo, mangaRead } = JSON.parse(JSON.stringify(req.body));
+    const { title, author, artist, description } = JSON.parse(JSON.stringify(req.body));
 
+    // FIXME: Si solo actualizo un capo los demas se ponen a null
     const updatedManga = await Manga.findByIdAndUpdate(id, {
         title,
         author,
         artist,
         description,
-        gender,
-        mangaInfo,
-        mangaRead
         // TODO: actualizar tambien la imagen si se desa, da error si no se actualiza.
         //mangaImagePath: req.file.path
     }, {new: true});
@@ -57,7 +60,16 @@ export async function updateManga(req: Request, res: Response): Promise<Response
 // Crea un nuevo manga en la base de datos
 export async function createManga(req: Request, res: Response): Promise<Response> {
     // Organizamos los datos recibidos de req.body
-    const { title, author, artist, description, gender, mangaInfo, mangaRead } = JSON.parse(JSON.stringify(req.body));
+    const { title, author, artist, description } = JSON.parse(JSON.stringify(req.body));
+
+    // Comprueba si se sube una imagen o no, por defecto selecciona una imagen si no se sube nada
+    let imagePath;
+
+    if (!req.file || !req.file.path) {
+        imagePath = defaults.mangaImage;
+    } else {
+        imagePath = req.file.path;
+    }
 
     // Definimo los datos del nuevo manga a crear, los datos se reciben de req.body
     const newManga = {
@@ -65,10 +77,7 @@ export async function createManga(req: Request, res: Response): Promise<Response
         author: author,
         artist: artist,
         description: description,
-        gender: gender,
-        mangaInfo: mangaInfo,
-        mangaRead: mangaRead,
-        mangaImagePath: req.file.path
+        mangaImagePath: imagePath
     };
 
     const manga = new Manga(newManga);

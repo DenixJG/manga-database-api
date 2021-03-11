@@ -1,31 +1,13 @@
 import { Schema, model, Document } from "mongoose";
+import { defaults } from "../conf/manga-config.json";
 
 const schema = new Schema({
-    title: String,
-    author: String,
-    artist: String,
-    mangaImagePath: String,
-    description: String,
-    gender: [
-        {
-            genderId: Number,
-            genderName: String
-        }
-    ],
-    mangaInfo: [
-        {
-            mangaInfoId: Number,
-            mangaInfoName: String,
-            mangaInfoLink: String
-        }
-    ],
-    mangaRead: [
-        {
-            mangaReadId: Number,
-            mangaReadName: String,
-            mangaReadLink: String
-        }
-    ]
+    title: {type: String, require: true},
+    author: {type: String, require: true},
+    artist: {type: String, require: true},
+    mangaImagePath: {type: String, default: defaults.mangaImage, required: true},
+    description: {type: String, required: true},
+    createdAt: { type: Date, default: Date.now() }
 });
 
 export interface IManga extends Document {
@@ -34,26 +16,6 @@ export interface IManga extends Document {
     artist: string,
     mangaImagePath: string,
     description: string,
-    gender: [
-        {
-            genderId: number,
-            genderName: string
-        }
-    ],
-    mangaInfo: [
-        {
-            mangaInfoId: number,
-            mangaInfoName: string,
-            mangaInfoLink: string
-        }
-    ],
-    mangaRead: [
-        {
-            mangaReadId: number,
-            mangaReadName: string,
-            mangaReadLink: string
-        }
-    ]
 }
 
 export default model<IManga>("Manga", schema);

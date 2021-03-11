@@ -1,0 +1,5 @@
+{
+    "defaults": {
+        "mangaImage": "uploads\\defaultMangaImage.png"
+    }
+}
