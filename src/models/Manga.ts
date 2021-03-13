@@ -1,7 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 import { defaults } from "../conf/manga-config.json";
 
-const schema = new Schema({
+const mangaSchema = new Schema({
     title: {type: String, require: true},
     author: {type: String, require: true},
     artist: {type: String, require: true},
@@ -18,4 +18,4 @@ export interface IManga extends Document {
     description: string,
 }
 
-export default model<IManga>("Manga", schema);
+export default model<IManga>("Manga", mangaSchema);

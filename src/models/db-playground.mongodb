@@ -6,11 +6,4 @@ use('manga-database');
 
 // Search for documents in the current collection.
 db.getCollection('mangas')
-  .find (
-    {
-        _id
-    },
-    {
-        
-    }
-  )
+  .find()

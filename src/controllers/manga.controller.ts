@@ -14,6 +14,20 @@ export async function getMangas(req: Request, res: Response): Promise<Response> 
     return res.json(manga);
 }
 
+// PAginacion de los mangas
+export async function getMangasPaginate(req: Request, res: Response): Promise<Response> {
+    let limit = Number(req.query.limit) || 10;
+    let page = Number(req.query.page) || 1;
+    limit > 100 ? limit = 100 : null;
+    page < 1 ? page = 1 : null;
+    const mangas = await Manga.find().skip((page - 1) * limit).limit(limit);
+    return res.json({
+        mangas: mangas,
+        actualPage: page,
+        actualLimit: limit
+    })
+}
+
 // Obtenemos un manga de la base de datos buscando con el ID
 export async function getManga(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
