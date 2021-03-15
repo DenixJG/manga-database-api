@@ -1,28 +1,31 @@
-import express from "express";
-import morgan from "morgan";
-import path from "path";
-import helmet from "helmet";
-import compression from "compression";
+import express from 'express';
+import morgan from 'morgan';
+import path from 'path';
+import helmet from 'helmet';
+import compression from 'compression';
 
 const app = express();
 
-import mangaRoutes from "./routes/manga.routes";
-import indexRoutes from "./routes/index.routes";
+import indexRoutes from './routes/index.routes';
+import authorRoutes from './routes/author.routes';
+import mangaRoutes from './routes/manga.routes';
 
 // Ajustes
-app.set("port", process.env.PORT || 4000);
+app.set('port', process.env.PORT || 4000);
 
 // Middlewares
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
-app.use(compression())
+app.use(compression());
 
 // Rutas
-app.use("/api", mangaRoutes);
-app.use("/", indexRoutes);
+app.use('/', indexRoutes);
+app.use('/api', authorRoutes);
+app.use('/api', mangaRoutes);
 
 // Local data
-app.use("/uploads", express.static(path.resolve("uploads")));
+app.use('/uploads', express.static(path.resolve('uploads')));
 
 export default app;
