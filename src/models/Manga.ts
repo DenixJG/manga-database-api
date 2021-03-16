@@ -8,7 +8,12 @@ const mangaSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Author'
         },
-        artist: { type: String, require: true },
+        artists: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Artist'
+            }
+        ],
         mangaImagePath: { type: String, default: defaults.mangaImage, required: true },
         description: { type: String, required: true }
     },
@@ -20,7 +25,7 @@ const mangaSchema = new Schema(
 export interface IManga extends Document {
     title: string;
     author: string;
-    artist: string;
+    artists: Array<String>;
     mangaImagePath: string;
     description: string;
 }

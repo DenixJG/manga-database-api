@@ -8,6 +8,7 @@ import { defaults } from '../conf/manga-config.json';
 // Modelos
 import Manga, { IManga } from '../models/Manga';
 import Author from '../models/Author';
+import Artist from '../models/Artist';
 
 // Obtenemos todos los mangas de la base de datos.
 export async function getMangas(req: Request, res: Response): Promise<Response> {
@@ -25,6 +26,7 @@ export async function getMangasPaginate(req: Request, res: Response): Promise<Re
         .skip((page - 1) * limit)
         .limit(limit)
         .populate('author', 'id name lname', Author);
+
     return res.json({
         mangas: mangas,
         actualPage: page,
@@ -35,7 +37,7 @@ export async function getMangasPaginate(req: Request, res: Response): Promise<Re
 // Obtenemos un manga de la base de datos buscando con el ID
 export async function getManga(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const manga = await Manga.findById(id).populate('author', '', Author);
+    const manga = await Manga.findById(id).populate('author', '_id name lname', Author).populate('artists', '_id name lname', Artist);
     // Obtener los datos del autor
     // const author = JSON.parse(JSON.stringify(manga?.author))
     return res.json(manga);
@@ -59,7 +61,7 @@ export async function deleteManga(req: Request, res: Response): Promise<Response
 // Actualiza el manga de la base de datos
 export async function updateManga(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { title, author, artist, description } = JSON.parse(JSON.stringify(req.body));
+    const { title, author, artists, description } = JSON.parse(JSON.stringify(req.body));
 
     const manga = await Manga.findById(id);
     let mangaActualImagePath = manga?.mangaImagePath;
@@ -74,7 +76,7 @@ export async function updateManga(req: Request, res: Response): Promise<Response
         {
             title,
             author,
-            artist,
+            artists,
             description,
             // TODO: actualizar tambien la imagen si se desa, da error si no se actualiza.
             mangaImagePath: mangaUpdateImagenPath
@@ -91,7 +93,7 @@ export async function updateManga(req: Request, res: Response): Promise<Response
 // Crea un nuevo manga en la base de datos
 export async function createManga(req: Request, res: Response): Promise<Response> {
     // Organizamos los datos recibidos de req.body
-    const { title, author, artist, description } = JSON.parse(JSON.stringify(req.body));
+    const { title, author, artists, description } = JSON.parse(JSON.stringify(req.body));
 
     // Comprueba si se sube una imagen o no, por defecto selecciona una imagen si no se sube nada
     let imagePath;
@@ -101,7 +103,7 @@ export async function createManga(req: Request, res: Response): Promise<Response
     const newManga = {
         title: title,
         author: author,
-        artist: artist,
+        artists: artists,
         description: description,
         mangaImagePath: imagePath
     };

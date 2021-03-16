@@ -8,6 +8,7 @@ const app = express();
 
 import indexRoutes from './routes/index.routes';
 import authorRoutes from './routes/author.routes';
+import artistRoutes from './routes/artist.routes';
 import mangaRoutes from './routes/manga.routes';
 
 // Ajustes
@@ -23,6 +24,7 @@ app.use(compression());
 // Rutas
 app.use('/', indexRoutes);
 app.use('/api', authorRoutes);
+app.use('/api', artistRoutes);
 app.use('/api', mangaRoutes);
 
 // Local data
