@@ -4,8 +4,10 @@ import path from 'path';
 import helmet from 'helmet';
 import compression from 'compression';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
 const app: Application = express();
+dotenv.config();
 
 // Importamos las rutas
 import indexRoutes from './routes/index.routes';
@@ -15,7 +17,7 @@ import mangaRoutes from './routes/manga.routes';
 import dashboardRoute from './routes/dashboard.routes'
 
 // Ajustes
-app.set('port', process.env.PORT || 4000);
+app.set('port', process.env.APP_PORT || 4000);
 
 // Middlewares
 app.use(morgan('dev'));

@@ -27,11 +27,7 @@ export async function getMangasPaginate(req: Request, res: Response): Promise<Re
         .limit(limit)
         .populate('author', 'id name lname', Author);
 
-    return res.json({
-        mangas: mangas,
-        actualPage: page,
-        actualLimit: limit
-    });
+    return res.json(mangas);
 }
 
 // Obtenemos un manga de la base de datos buscando con el ID
