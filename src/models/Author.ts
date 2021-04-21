@@ -19,4 +19,4 @@ export interface IAuthor extends Document {
     bday: Date;
 }
 
-export default model<IAuthor>('Auhtor', authorSchema);
+export default model<IAuthor>('Author', authorSchema);
