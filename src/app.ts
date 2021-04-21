@@ -18,6 +18,7 @@ import dashboardRoute from './routes/dashboard.routes'
 
 // Ajustes
 app.set('port', process.env.APP_PORT || 4000);
+app.set('hostname', process.env.APP_HOSTNAME || 'localhost');
 
 // Middlewares
 app.use(morgan('dev'));

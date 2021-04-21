@@ -41,6 +41,7 @@ Despues de ejecutar el comando nos pedira una contraseña para cada usuario que 
 Se pueden usar las siguientes variables de entorno:
 
 * `APP_PORT` Puerto a usar por la aplicacción, por defecto `4000`.
+* `APP_HOSTNAME` Host que usara la app, por defecto `localhost`
 * `DB_HOST` Host de la base de datos, por defecto `localhost`.
 * `DB_PORT` Puerto usado por la base de datos, por defecto `27017`.
 * `DB_USERNAME` Usuario autorizado en la base de datos.
@@ -54,6 +55,7 @@ Ejemplo para archivo `.env`:
 ```txt
 # App environment variables
 APP_PORT=4000
+APP_HOSTNAME="192.168.0.0"
 
 # Database environment variables
 DB_HOST='localhost
