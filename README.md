@@ -4,9 +4,13 @@ API usada para realizar operaciones **CRUD** sobre una base de datos de **MongoD
 
 ## 1 - Instalación
 
-Es importante disponer de [`Node.js`](https://nodejs.org/) instalado y también de su gestor de paquetes `npm`, este suele instalarse de forma automatica la instalar `Node.js`.
+Es importante disponer de [`Node.js`](https://nodejs.org/) instalado y también de su gestor de paquetes `npm`, este suele instalarse de forma automatica la instalar Node.js.
 
-Descarga [node.js](https://nodejs.org/)
+**Software necesario**
+
+* [Node.js](https://nodejs.org/)
+* [MongoDB](https://www.mongodb.com/try/download/community) (Sistema de Base de datos)
+* [MongoDB Compass](https://www.mongodb.com/products/compass) (Opcional)
 
 ##### Clonar el repositorio
 
