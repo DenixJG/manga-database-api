@@ -9,18 +9,28 @@ export async function getDashboardInfo(req: Request, res: Response): Promise<Res
     const totalAuthors = await Author.estimatedDocumentCount();
     const totalArtists = await Artist.estimatedDocumentCount();
 
-    return res.status(200).json([
-        { info: {
+    const recentMangas = await Manga.find().sort({ $natural: -1 }).limit(2);
+    const recentAuthors = await Author.find().sort({ $natural: -1 }).limit(2);
+    const recentArtists = await Artist.find().sort({ $natural: -1 }).limit(2);
+
+    return res.status(200).json({
+        mangaInfo: {
             infoType: 'Mangas',
-            cantidad: totalMangas 
-        }},
-        { info: {
+            link: '/manga-library',
+            cantidad: totalMangas,
+            reciente: recentMangas
+        },
+        authorInfo: {
             infoType: 'Autores',
-            cantidad: totalAuthors
-        }},
-        { info: {
+            link: '/author-library',
+            cantidad: totalAuthors,
+            reciente: recentAuthors
+        },
+        artistInfo: {
             infoType: 'Artistas',
-            cantidad: totalArtists
-        }}
-    ]);
+            link: '/artist-library',
+            cantidad: totalArtists,
+            reciente: recentArtists
+        }
+    });
 }

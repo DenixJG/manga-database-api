@@ -8,8 +8,8 @@ dotenv.config();
 const dbConfig = {
     DB_HOST: process.env.DB_HOST || 'localhost',
     DB_PORT: process.env.DB_PORT || 27017,
-    DB_USERNAME: process.env.DB_USERNAME || 'mangaUser',
-    DB_PASSWORD: process.env.DB_PASSWORD || 'ZdbP321',
+    DB_USERNAME: process.env.DB_USERNAME || 'dbUser',
+    DB_PASSWORD: process.env.DB_PASSWORD || 'dbPasswd',
     DB_NAME: process.env.DB_NAME || 'manga-database'
 }
 
