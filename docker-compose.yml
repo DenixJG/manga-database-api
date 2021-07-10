@@ -1,0 +1,36 @@
+version: '3.1'
+
+services:
+    mongo:
+        image: mongo
+        container_name: mongo_db_server
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
+        volumes:
+            - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+            - ./mongo-volume/data:/data/db
+        ports: 
+            - 27017:27017
+    
+    manga-api:
+        image: manga-api-image
+        container_name: manga_database_api
+        build:
+            context: ../manga-api-container
+            dockerfile: ./Dockerfile
+        volumes: 
+            - ./uploads:/app/src/uploads
+        ports: 
+            - 4000:4000
+        depends_on:
+            - mongo
+        environment:
+            DB_NAME: test-manga
+            DB_HOST: mongo
+            DB_PORT: 27017
+            DB_USERNAME: mangaUser
+            DB_PASSWORD: 123
+            APP_PORT: 4000
+        
+
