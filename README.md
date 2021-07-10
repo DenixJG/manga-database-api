@@ -64,3 +64,31 @@ DB_USERNAME=''
 DB_PASSWORD='' 
 DB_NAME=''
 ```
+
+## 4 - Dockerfile
+
+Construir una imagen del proyecto ejecutamos el comando en la carpeta donde se encuentra el proyecto y el archivo `Dockerfile`.
+
+```ps
+docker build -t manga-api:v1 .
+```
+
+Para poder ejecutar un contenedor de la imagen es necesario tener en cuenta las variables de entorno mencionadas en [Variables de entorno]().
+
+Ejemplo:
+```ps
+docker run -it --rm --name manga-bo -p 8080:80 -e APP_PORT=80 -e DB_HOST=mongo -e DB_PASSWORD=password --network=netmanga denixjg/manga-api:v1
+```
+
+* `-it` Ejecuta el contenedor de forma interactiva, como una TTY..
+* `--rm` Elimna el contenedor de forma automatica si existe..
+* `--name` Nombre del contenedor.
+* `-p` Puerto y redurecion del puerto.
+* `-e` o `--env` Especifica una variable de entorno.
+* `--network` Especifica a que red se conecta el contenedor.
+
+Descargar imagen de **DockerHub** o ir al [respositorio](https://hub.docker.com/repository/docker/denixjg/manga-api).
+
+```ps
+docker pull denixjg/manga-api:v1
+```

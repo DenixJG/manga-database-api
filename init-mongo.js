@@ -35,20 +35,20 @@ db.createCollection('artists');
 print('********** CREATE DB OWNER **********');
 db.createUser({
     user: 'mangaOwner',
-    pwd: passwordPrompt(),
+    pwd: '12345', // passwordPrompt(),
     roles: [{ role: 'dbOwner', db: DB_NAME }]
 });
 
 print('********** CREATE DB ADMIN **********');
 db.createUser({
     user: 'mangaAdmin',
-    pwd: passwordPrompt(),
+    pwd: '1234', //passwordPrompt(),
     roles: [{ role: 'userAdmin', db: DB_NAME }]
 });
 
 print('********** CREATE DB USER **********');
 db.createUser({
     user: 'mangaUser',
-    pwd: passwordPrompt(),
+    pwd: '123', // passwordPrompt(),
     roles: [{ role: 'readWrite', db: DB_NAME }]
 });
