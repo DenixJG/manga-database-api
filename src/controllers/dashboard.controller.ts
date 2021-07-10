@@ -9,7 +9,11 @@ export async function getDashboardInfo(req: Request, res: Response): Promise<Res
     const totalAuthors = await Author.estimatedDocumentCount();
     const totalArtists = await Artist.estimatedDocumentCount();
 
-    const recentMangas = await Manga.find().sort({ $natural: -1 }).limit(2);
+    const recentMangas = await Manga.find()
+        .sort({ $natural: -1 })
+        .limit(2)
+        .populate('author', '_id name lname country', Author)
+        .populate('artists', '_id name lname country', Artist);
     const recentAuthors = await Author.find().sort({ $natural: -1 }).limit(2);
     const recentArtists = await Artist.find().sort({ $natural: -1 }).limit(2);
 

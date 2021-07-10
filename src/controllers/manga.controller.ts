@@ -13,7 +13,7 @@ import Artist from '../models/Artist';
 // Obtenemos todos los mangas de la base de datos.
 export async function getMangas(req: Request, res: Response): Promise<Response> {
     const manga = await Manga.find();
-    return res.json(manga);
+    return res.json(manga).status(200);
 }
 
 // PAginacion de los mangas
@@ -27,7 +27,7 @@ export async function getMangasPaginate(req: Request, res: Response): Promise<Re
         .limit(limit)
         .populate('author', 'id name lname', Author);
 
-    return res.json(mangas);
+    return res.json(mangas).status(200);
 }
 
 // Obtenemos un manga de la base de datos buscando con el ID
@@ -36,7 +36,7 @@ export async function getManga(req: Request, res: Response): Promise<Response> {
     const manga = await Manga.findById(id).populate('author', '_id name lname country', Author).populate('artists', '_id name lname country', Artist);
     // Obtener los datos del autor
     // const author = JSON.parse(JSON.stringify(manga?.author))
-    return res.json(manga);
+    return res.json(manga).status(200);
 }
 
 // Elimina un manga de la base de datos haciendo uso del ID
@@ -51,7 +51,7 @@ export async function deleteManga(req: Request, res: Response): Promise<Response
     }
     return res.json({
         message: 'Manga eliminado'
-    });
+    }).status(200);
 }
 
 // Actualiza el manga de la base de datos
@@ -84,7 +84,7 @@ export async function updateManga(req: Request, res: Response): Promise<Response
     return res.json({
         message: 'Manga actualizado',
         updatedManga
-    });
+    }).status(200);
 }
 
 // Crea un nuevo manga en la base de datos
@@ -116,5 +116,5 @@ export async function createManga(req: Request, res: Response): Promise<Response
     return res.json({
         message: 'Nuevo manga creado',
         manga
-    });
+    }).status(200);
 }

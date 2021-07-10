@@ -1,8 +1,8 @@
 import { connect } from 'mongoose';
 import { dbConfig as config } from './conf/config';
 
-const URI_REMOTE: string = `mongodb+srv://${config.DB_USERNAME}:${config.DB_PASSWORD}@${config.DB_HOST}/${config.DB_NAME}?retryWrites=true&w=majority`
-const URI_LOCAL: string = `mongodb://${config.DB_USERNAME}:${config.DB_PASSWORD}@${config.DB_HOST}:${config.DB_PORT}/${config.DB_NAME}`
+const URI_REMOTE: string = `mongodb+srv://${config.DB_USERNAME}:${config.DB_PASSWORD}@${config.DB_HOST}/${config.DB_NAME}?retryWrites=true&w=majority`;
+const URI_LOCAL: string = `mongodb://${config.DB_USERNAME}:${config.DB_PASSWORD}@${config.DB_HOST}:${config.DB_PORT}/${config.DB_NAME}`;
 
 export async function startConnection() {
     await connect(URI_LOCAL, {
