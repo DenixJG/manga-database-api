@@ -31,9 +31,15 @@ export async function searchMangaOnDb(req: Request, res: Response): Promise<Resp
             default:
                 break;
         }
+    } else {
+        who = 'mangas';
+        mangasFound = await Manga.find({ title: name }).limit(10).exec();
+        if (mangasFound.length > 0) {
+            return res.status(200).json({ mangasFound });
+        }
     }
 
     return res.status(404).json({
-        err: 'Nothing found',
+        err: 'Nothing found'
     });
 }
